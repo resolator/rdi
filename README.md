@@ -21,5 +21,5 @@ cudnn_set: "runtime", "devel"
 ```
 
 # Features
-- When you inside docker the prompt starts from "🐳:whale: ".
+- When you inside docker the prompt starts from ":whale: ".
 - README in progress...
