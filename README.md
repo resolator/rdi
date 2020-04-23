@@ -1,11 +1,7 @@
 # rdi - Resolator Docker Image
-Resolator Docker Image - repository with file for building customized docker 
-images.
+Resolator Docker Image - image for efficient and comfortable in-docker development. 
 
-This image based on [nvidia/cuda](https://gitlab.com/nvidia/container-images/cuda/-/tree/master/dist/ubuntu18.04) images.
-
-The `context` dir contains all needable files for `docker build` command.
-
+This image aimed on DL and CV development and based on [nvidia/cuda](https://gitlab.com/nvidia/container-images/cuda/-/tree/master/dist/ubuntu18.04) images.
 
 ## Usage
 ### Build
@@ -55,9 +51,11 @@ alias rdrun='docker run --runtime nvidia --shm-size 8G -e UNAME=$(whoami) -e UID
 If you want to keep the completion working for docker run command even in this alias you can find a way in [this](https://github.com/resolator/tdc) project.
 
 ## Features
+- Copied user from the host machine (now any in-docker created files will have your user's attributes). 
+- Pre-installed cuda (for ML development).
+- Pre-installed libraries for install `opencv-python`.
+- Upgraded pip to 19.3.1 and some preinstalled utils.
+- Fixed history search in terminal (start entering your command and navigate on history using up/down arrows).
 - When you inside docker the prompt starts from ":whale: ".
-- README in progress...
-
-
-
-
+- Pre-installed configs for better in-terminal development form [this](https://github.com/resolator/tdc) project.
+- Forwarded displaying windows from container to host machine (host system must have a running X11 server).
