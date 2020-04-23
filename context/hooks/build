@@ -1,4 +1,10 @@
 #!/bin/bash
+echo $IMAGE_NAME # ="resolator/10.2-cudnn7-runtime"
+echo $DOCKERFILE_PATH # ="/home/dusiak/repos/rdi/context/Dockerfile"
 cuda_version=$(echo $IMAGE_NAME | grep -oP "/\K\d+\.\d")
 cudnn_set=$(echo "$IMAGE_NAME" | grep -oP "\-\K[a-z]*$")
+
+echo $cudnn_set
+echo $cuda_version
+
 docker build --build-arg cuda_version=$cuda_version --build-arg cudnn_set=$cudnn_set -f $DOCKERFILE_PATH -t $IMAGE_NAME .
