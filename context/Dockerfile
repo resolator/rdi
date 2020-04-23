@@ -48,8 +48,8 @@ RUN apt update && apt upgrade -y && apt clean && rm -rf /var/lib/apt/lists/*
 COPY inputrc /etc/inputrc
 
 # copy user's configs
-COPY [".bash*", ".tmux*", "set_theme.sh", "/etc/skel/"]
-COPY .config /etc/skel/.config
+COPY ["tdc/configs/.bash*", "tdc/configs/.tmux*", "tdc/configs/set_theme.sh", "/etc/skel/"]
+COPY tdc/configs/.config /etc/skel/.config
 COPY init.sh /
 
 # set default user IDS and color of terminal with emoji support in tmux
