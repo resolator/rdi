@@ -1,4 +1,4 @@
 #!/bin/bash
-cuda_version=$(echo $IMAGE_NAME | grep -oP "^\d+\.\d")
+cuda_version=$(echo $IMAGE_NAME | grep -oP "/\K\d+\.\d")
 cudnn_set=$(echo "$IMAGE_NAME" | grep -oP "\-\K[a-z]*$")
 docker build --build-arg cuda_version=$cuda_version --build-arg cudnn_set=$cudnn_set -f $DOCKERFILE_PATH -t $IMAGE_NAME .
