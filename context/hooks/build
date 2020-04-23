@@ -1,4 +1,13 @@
 #!/bin/bash
+# build args extracts from IMAGE_TAG, that is provided at building trigger
 cuda_version=$(echo $IMAGE_NAME | grep -oP ":\K\d+\.\d")
 cudnn_set=$(echo "$IMAGE_NAME" | grep -oP "\-\K[a-z]*$")
+
+# if the tag is unusual - select default cuda and cudnn set
+if [ "${cuda_version}" = "" ] || [ "${cudnn_set}" = "" ]
+then
+	cuda_version="10.2"
+	cudnn_set="runtime"
+fi
+
 docker build --build-arg cuda_version=$cuda_version --build-arg cudnn_set=$cudnn_set -f $DOCKERFILE_PATH -t $IMAGE_NAME .
