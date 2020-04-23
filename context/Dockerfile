@@ -45,12 +45,12 @@ RUN apt update && pip3 install pip==19.3.1 && apt clean && rm -rf /var/lib/apt/l
 RUN apt update && apt upgrade -y && apt clean && rm -rf /var/lib/apt/lists/*
 
 # copy inputrc for fixed history search
-COPY context/inputrc /etc/inputrc
+COPY inputrc /etc/inputrc
 
 # copy user's configs
-COPY ["context/tdc/configs/.bash*", "context/tdc/configs/.tmux*", "context/tdc/configs/set_theme.sh", "/etc/skel/"]
-COPY context/tdc/configs/.config /etc/skel/.config
-COPY context/init.sh /
+COPY ["tdc/configs/.bash*", "tdc/configs/.tmux*", "tdc/configs/set_theme.sh", "/etc/skel/"]
+COPY tdc/configs/.config /etc/skel/.config
+COPY init.sh /
 
 # set default user IDS and color of terminal with emoji support in tmux
 ENV GID=1000 UID=1000 UNAME=root TERM=screen-256color LANG=en_US.UTF-8
