@@ -6,14 +6,8 @@ ARG cudnn_set=runtime
 
 FROM nvidia/cuda:${cuda_version}-cudnn7-${cudnn_set}-ubuntu18.04
 
-# opencv libs
-RUN apt update && apt install -y \
-    libglib2.0-0 \
-    libsm6 \
-    libxext6 \
-    libfontconfig1 \
-    libxrender1 \
-    && apt clean && rm -rf /var/lib/apt/lists/*
+# set locale for avoid problem with emoji in prompt and possible other problems
+RUN apt update && apt install -y locales && locale-gen en_US.UTF-8 && apt clean && rm -rf /var/lib/apt/lists/*
 
 # common utils
 RUN apt update && apt install -y \
@@ -42,7 +36,7 @@ RUN apt update && apt install -y \
 RUN apt update && pip3 install pip==19.3.1 && apt clean && rm -rf /var/lib/apt/lists/*
 
 # I like when everything is up to date
-RUN apt update && apt upgrade -y && apt clean && rm -rf /var/lib/apt/lists/*
+RUN apt update && apt upgrade -y && apt autoremove && apt clean && rm -rf /var/lib/apt/lists/*
 
 # copy inputrc for fixed history search
 COPY inputrc /etc/inputrc
@@ -53,5 +47,5 @@ COPY tdc/configs/.config /etc/skel/.config
 COPY init.sh /
 
 # set default user IDS and color of terminal with emoji support in tmux
-ENV GID=1000 UID=1000 UNAME=root TERM=screen-256color LANG=en_US.UTF-8
+ENV GID=1000 UID=1000 UNAME=root LANG=en_US.UTF-8 LANGUAGE=en_US:en LC_ALL=en_US.UTF-8
 ENTRYPOINT ["/init.sh"]
