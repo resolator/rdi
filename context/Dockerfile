@@ -1,10 +1,6 @@
 # can be "9.2", "10.0", "10.1", "10.2"
-ARG cuda_version=10.2
-
-# can be "runtime" or "devel"
-ARG cudnn_set=runtime
-
-FROM nvidia/cuda:${cuda_version}-cudnn7-${cudnn_set}-ubuntu18.04
+ARG parent="nvidia/cuda:10.2-cudnn7-runtime-ubuntu18.04"
+FROM ${parent}
 
 # set locale for avoid problem with emoji in prompt and possible other problems
 RUN apt update && apt install -y locales && locale-gen en_US.UTF-8 && apt clean && rm -rf /var/lib/apt/lists/*

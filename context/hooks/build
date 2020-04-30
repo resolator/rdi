@@ -1,13 +1,24 @@
 #!/bin/bash
 # build args extracts from IMAGE_TAG, that is provided at building trigger
-cuda_version=$(echo $IMAGE_NAME | grep -oP ":\K\d+\.\d")
-cudnn_set=$(echo "$IMAGE_NAME" | grep -oP "\-\K[a-z]*$")
 
-# if the tag is unusual - select default cuda and cudnn set
-if [ "${cuda_version}" = "" ] || [ "${cudnn_set}" = "" ]
+prefix=$(echo $IMAGE_NAME | grep -oP "^.*?-")
+suffix=$(echo $IMAGE_NAME | grep -oP "^.*?-\K.*$")
+
+# replace right prefix for parent image
+if [ "${prefix}" == "cuda-" ]
 then
-	cuda_version="10.2"
-	cudnn_set="runtime"
+	prefix="nvidia/cuda:"
+elif [ "${prefix}" == "ubuntu-" ]
+then
+	prefix="ubuntu:"
 fi
 
-docker build --build-arg cuda_version=$cuda_version --build-arg cudnn_set=$cudnn_set -f $DOCKERFILE_PATH -t $IMAGE_NAME .
+parent=${prefix}${suffix}
+
+# if the tag is unsupported - stay it as is
+if [ "${parent}" == "" ]
+then
+	parent=${IMAGE_NAME}
+fi
+
+docker build --build-arg --build-arg parent=$parent -f $DOCKERFILE_PATH -t $IMAGE_NAME .
