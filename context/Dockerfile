@@ -1,5 +1,4 @@
-# can be "9.2", "10.0", "10.1", "10.2"
-ARG parent="nvidia/cuda:10.2-cudnn7-runtime-ubuntu18.04"
+ARG parent="ubuntu:18.04"
 FROM ${parent}
 
 # set locale for avoid problem with emoji in prompt and possible other problems
@@ -21,15 +20,15 @@ RUN apt update && apt install -y \
     git \
 && apt clean && rm -rf /var/lib/apt/lists/*
 
+# install in-Terminal development configs for each new user
+RUN git clone https://github.com/resolator/tdc.git /tmp/tdc && /tmp/tdc/install.sh /etc/skel && rm -rf /tmp/tdc
+
 # python3
 RUN apt update && apt install -y \
     python3-dev \
     python3-pip \
     ipython3 \
-&& apt clean && rm -rf /var/lib/apt/lists/*
-
-# upgrade pip
-RUN apt update && pip3 install pip==19.3.1 && apt clean && rm -rf /var/lib/apt/lists/*
+&& pip3 install pip==20.1 && apt clean && rm -rf /var/lib/apt/lists/*
 
 # I like when everything is up to date
 RUN apt update && apt upgrade -y && apt autoremove && apt clean && rm -rf /var/lib/apt/lists/*
@@ -37,9 +36,7 @@ RUN apt update && apt upgrade -y && apt autoremove && apt clean && rm -rf /var/l
 # copy inputrc for fixed history search
 COPY inputrc /etc/inputrc
 
-# copy user's configs
-COPY ["tdc/configs/.bash*", "tdc/configs/.tmux*", "tdc/configs/set_theme.sh", "/etc/skel/"]
-COPY tdc/configs/.config /etc/skel/.config
+# copy initial config
 COPY init.sh /
 
 # set default user IDS and color of terminal with emoji support in tmux
