@@ -1,9 +1,9 @@
 #!/bin/bash
 # build args extracts from IMAGE_TAG, that is provided at building trigger
+# example value for IMAGE_TAG: index.docker.io/resolator/rdi:ubuntu-18.04
 
-echo $IMAGE_NAME
-prefix=$(echo $IMAGE_NAME | grep -oP "/.*?-")
-suffix=$(echo $IMAGE_NAME | grep -oP "/.*?-\K.*$")
+prefix=$(echo $IMAGE_NAME | grep -oP ":\K.*?-")
+suffix=$(echo $IMAGE_NAME | grep -oP ":.*?-\K.*$")
 
 # replace right prefix for parent image
 if [ "${prefix}" == "cuda-" ]
