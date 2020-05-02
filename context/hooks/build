@@ -21,4 +21,4 @@ then
 	parent=${IMAGE_NAME}
 fi
 
-docker build --build-arg --build-arg parent=$parent -f $DOCKERFILE_PATH -t $IMAGE_NAME .
+docker build --build-arg parent=$parent -f $DOCKERFILE_PATH -t $IMAGE_NAME .
