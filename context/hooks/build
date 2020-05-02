@@ -1,8 +1,9 @@
 #!/bin/bash
 # build args extracts from IMAGE_TAG, that is provided at building trigger
 
-prefix=$(echo $IMAGE_NAME | grep -oP "^.*?-")
-suffix=$(echo $IMAGE_NAME | grep -oP "^.*?-\K.*$")
+echo $IMAGE_NAME
+prefix=$(echo $IMAGE_NAME | grep -oP "/.*?-")
+suffix=$(echo $IMAGE_NAME | grep -oP "/.*?-\K.*$")
 
 # replace right prefix for parent image
 if [ "${prefix}" == "cuda-" ]
