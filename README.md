@@ -48,6 +48,10 @@ It's also recommended to increase the size of shared memory:
 ```shell script
 --shm-size 8G
 ```
+If you want to forward your localtime to the container:
+```shell script
+-v /etc/localtime:/etc/localtime:ro
+```
 
 ### Interaction
 After you have run the docker you are supposed to be in container's terminal. 
@@ -59,7 +63,7 @@ mechanism, so if you want to leave it running use the following key sequence:
 If you use this image very often it's useful to make an alias in your 
 `.bashrc` file:
 ```shell script
-alias rdrun='docker run --runtime nvidia --shm-size 8G -e TERM=$TERM -e UNAME=$(whoami) -e UID=$(id -u) -e GID=$(id -g) -e DISPLAY=unix$DISPLAY -v /tmp/.X11-unix:/tmp/.X11-unix -v $HOME/data:/data -v $HOME/repos:/repos -it'
+alias rdrun='docker run --runtime nvidia --shm-size 8G -e TERM=$TERM -e UNAME=$(whoami) -e UID=$(id -u) -e GID=$(id -g) -e DISPLAY=unix$DISPLAY -v /tmp/.X11-unix:/tmp/.X11-unix -v /etc/localtime:/etc/localtime:ro -v $HOME/data:/data -v $HOME/repos:/repos -it'
 ```
 If you want to keep the completion working for docker run command even in this 
 alias you can find a way in [tdc repo](https://github.com/resolator/tdc).
