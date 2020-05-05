@@ -27,8 +27,7 @@ RUN git clone https://github.com/resolator/tdc.git /tmp/tdc && /tmp/tdc/install.
 RUN apt update && apt install -y \
     python3-dev \
     python3-pip \
-    ipython3 \
-&& pip3 install pip==20.1 && apt clean && rm -rf /var/lib/apt/lists/*
+&& pip3 install pip==20.1 && pip3 install ipython && apt clean && rm -rf /var/lib/apt/lists/*
 
 # I like when everything is up to date
 RUN apt update && apt upgrade -y && apt autoremove && apt clean && rm -rf /var/lib/apt/lists/*
