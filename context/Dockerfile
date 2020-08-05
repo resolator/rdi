@@ -38,6 +38,9 @@ COPY inputrc /etc/inputrc
 # copy initial config
 COPY init.sh /
 
+# fix for ARM64
+RUN chmod +x /init.sh
+
 # set default user IDS and color of terminal with emoji support in tmux
 ENV GID=1000 UID=1000 UNAME=root LANG=en_US.UTF-8 LANGUAGE=en_US:en LC_ALL=en_US.UTF-8
 ENTRYPOINT ["/init.sh"]
